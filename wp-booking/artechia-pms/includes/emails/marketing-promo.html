@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6; }
+        .wrapper { width: 100%; table-layout: fixed; background-color: #f8fafc; padding-bottom: 40px; }
+        .main { background-color: #ffffff; margin: 20px auto; width: 100%; max-width: 600px; border-spacing: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .header { background-color: #ffffff; padding: 30px 20px; text-align: center; border-bottom: 4px solid #2563eb; }
+        .header h1 { color: #2563eb; margin: 0; font-size: 26px; font-weight: 800; }
+        .content { padding: 40px 30px; }
+        .promo-card { background-color: #eff6ff; border: 2px dashed #93c5fd; border-radius: 12px; padding: 24px; text-align: center; margin: 24px 0; }
+        .promo-code { font-family: monospace; font-size: 32px; font-weight: 800; color: #1d4ed8; letter-spacing: 2px; margin: 12px 0; display: block; }
+        .btn { display: inline-block; background: #2563eb; color: #ffffff !important; padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: 700; }
+        .footer { text-align: center; padding: 30px; color: #64748b; font-size: 14px; background-color: #f8fafc; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <table class="main">
+            <tr><td class="header"><h1>{property_name}</h1></td></tr>
+            <tr>
+                <td class="content">
+                    <h2 style="margin-top:0;">¡Tenemos una oferta exclusiva para vos!</h2>
+                    <p>Hola <strong>{guest_name}</strong>,</p>
+                    <p>En <strong>{property_name}</strong> queremos que vuelvas a disfrutar de la mejor experiencia. Por eso, diseñamos una promoción especial para tu próxima estadía.</p>
+                    <div class="promo-card">
+                        <p style="margin: 0; font-weight: 600; color: #1e3a8a;">Usá este código al reservar:</p>
+                        <span class="promo-code">{promo_code}</span>
+                        <p style="margin: 0; font-size: 14px; color: #1e40af;">{promo_description}</p>
+                    </div>
+                    <p>No dejes pasar esta oportunidad. Las fechas aplican sujetas a disponibilidad.</p>
+                    <div style="text-align: center; margin-top: 30px;"><a href="{booking_url}" class="btn">Reservar ahora</a></div>
+                </td>
+            </tr>
+        </table>
+        <table style="margin: 0 auto; width: 100%; max-width: 600px;">
+            <tr>
+                <td class="footer">
+                    <p>&copy; 2026 {property_name}. Todos los derechos reservados.</p>
+                    <p><a href="{unsubscribe_url}" style="color: #64748b;">Darse de baja</a></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
