@@ -81,8 +81,13 @@ export interface CalendarHintsResponse {
 
 export async function getCalendarHints(months = 3): Promise<CalendarHintsResponse> {
   const res = await fetch(
-    `${BASE_URL}/wp-json/artechia/v1/public/calendar-hints?property_id=${PROPERTY_ID}&months=${months}`,
-    { next: { revalidate: 30 } }
+    `${BASE_URL}/wp-json/artechia/v1/public/calendar-hints`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ property_id: PROPERTY_ID, months }),
+      next: { revalidate: 30 }
+    }
   );
 
   if (!res.ok) {

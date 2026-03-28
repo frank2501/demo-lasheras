@@ -32,6 +32,32 @@ function todayISO(): string {
   return toISO(d.getFullYear(), d.getMonth(), d.getDate());
 }
 
+// Global cache to prevent re-fetching every time the calendar popup is opened
+let globalHintsCache: Record<string, CalendarHintDay> | null = null;
+let globalHintsPromise: Promise<any> | null = null;
+
+export function prefetchCalendarHints() {
+  if (typeof window === 'undefined') return;
+  if (globalHintsCache || globalHintsPromise) return;
+
+  globalHintsPromise = getCalendarHints(6).then((res) => {
+    if (res.days) {
+      globalHintsCache = res.days;
+      return res.days;
+    }
+    return {};
+  }).catch(() => {
+    globalHintsPromise = null;
+    return {};
+  });
+}
+
+// Start prefetching as soon as this module is evaluated on the client
+if (typeof window !== 'undefined') {
+  // Small delay to let critical rendering finish first
+  setTimeout(prefetchCalendarHints, 500);
+}
+
 /* ── Calendar Component ──────────────────────────── */
 
 export default function AvailabilityCalendar({
@@ -45,16 +71,30 @@ export default function AvailabilityCalendar({
 
   const [viewMonth, setViewMonth] = useState(now.getMonth());
   const [viewYear, setViewYear] = useState(now.getFullYear());
-  const [hints, setHints] = useState<Record<string, CalendarHintDay>>({});
+  const [hints, setHints] = useState<Record<string, CalendarHintDay>>(globalHintsCache || {});
   const [selectionState, setSelectionState] = useState<SelectionState>(
     checkIn && !checkOut ? 'checkin_selected' : 'idle'
   );
   const [hoverDate, setHoverDate] = useState('');
 
   useEffect(() => {
-    getCalendarHints(6).then((res) => {
-      if (res.days) setHints(res.days);
-    }).catch(() => {});
+    // If we already have the cache, no need to fetch again since it's short-lived (session)
+    if (globalHintsCache) return;
+
+    if (!globalHintsPromise) {
+      globalHintsPromise = getCalendarHints(6).then((res) => {
+        if (res.days) {
+          globalHintsCache = res.days;
+          return res.days;
+        }
+        return {};
+      }).catch(() => {
+        globalHintsPromise = null;
+        return {};
+      });
+    }
+
+    globalHintsPromise.then((days) => setHints(days));
   }, []);
 
   const canGoBack = viewYear > now.getFullYear() || viewMonth > now.getMonth();
@@ -257,8 +297,9 @@ function MonthGrid({
           const isFull = hint?.s === 'full';
           const isLow = hint?.s === 'low';
           const hasPromo = !!hint?.p;
+          const promoPct = hint?.p;
 
-          let cellClass = 'relative flex items-center justify-center h-9 text-xs rounded-md transition-all ';
+          let cellClass = 'relative flex flex-col items-center justify-center h-9 text-xs rounded-md transition-all ';
           let dotColor = '';
 
           if (isCheckIn || isCheckOut) {
@@ -274,12 +315,14 @@ function MonthGrid({
           } else if (isFull) {
             cellClass += 'text-gray-300 cursor-not-allowed ';
             dotColor = 'bg-red-400';
+          } else if (isLow && hasPromo) {
+            cellClass += 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 cursor-pointer font-semibold ';
+            dotColor = 'bg-amber-400';
           } else if (isLow) {
             cellClass += 'text-azul-marino hover:bg-gray-50 cursor-pointer ';
             dotColor = 'bg-amber-400';
           } else if (hasPromo) {
-            cellClass += 'text-azul-marino hover:bg-gray-50 cursor-pointer ';
-            dotColor = 'bg-emerald-400';
+            cellClass += 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 cursor-pointer font-semibold ';
           } else {
             cellClass += 'text-azul-marino hover:bg-gray-50 cursor-pointer ';
           }
@@ -294,11 +337,16 @@ function MonthGrid({
               className={cellClass}
             >
               {day}
+              {hasPromo && promoPct && !isCheckIn && !isCheckOut && !isPast && !isFull && (
+                <span className="absolute top-0 right-0 bg-emerald-500 text-white text-[7px] font-bold leading-none px-1 py-[2px] rounded-tr-md rounded-bl-md shadow-sm z-10">
+                  -{promoPct}%
+                </span>
+              )}
               {isToday && !isCheckIn && !isCheckOut && (
-                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-azul-cielo" />
+                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-azul-cielo" />
               )}
               {dotColor && !isCheckIn && !isCheckOut && !isInRange && !isInHoverRange && (
-                <span className={`absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full ${dotColor}`} />
+                <span className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full ${dotColor}`} />
               )}
             </button>
           );

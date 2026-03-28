@@ -100,12 +100,12 @@ export default function Habitaciones() {
                   </div>
 
                   <div className="border-t border-crema pt-4 mt-4">
-                    <a
-                      href="#inicio"
+                    <Link
+                      href={`/habitaciones#${room.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-')}`}
                       className="btn-primary w-full block text-center text-sm"
                     >
-                      Consultar disponibilidad
-                    </a>
+                      Ver fotos y detalles
+                    </Link>
                   </div>
                 </div>
               </div>

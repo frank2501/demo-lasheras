@@ -1,7 +1,7 @@
 import { MapPin, Phone, Mail, Clock, Navigation, Waves, Train, Plane } from 'lucide-react';
 
 const NEARBY_PLACES = [
-  { name: 'Bristol Beach', distance: '950 m', type: 'beach' },
+  { name: 'Playa Bristol', distance: '950 m', type: 'beach' },
   { name: 'Centro Comercial Güemes', distance: '400 m', type: 'place' },
   { name: 'Calle peatonal San Martín', distance: '1,2 km', type: 'place' },
   { name: 'Villa Victoria', distance: '1,1 km', type: 'place' },
@@ -83,8 +83,13 @@ export default function Ubicacion() {
                     <Phone size={18} className="text-azul-cielo" />
                   </div>
                   <div>
-                    <p className="font-semibold text-sm text-azul-marino">Teléfono</p>
-                    <a href="tel:02234937841" className="text-sm text-foreground/70 hover:text-azul-cielo transition-colors">
+                    <p className="font-semibold text-sm text-azul-marino">WhatsApp</p>
+                    <a 
+                      href="https://wa.me/5492234937841?text=Hola!%20Me%20gustar%C3%ADa%20hacer%20una%20consulta%20sobre%20disponibilidad/reserva%20en%20Las%20Heras%20Hotel." 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-foreground/70 hover:text-azul-cielo transition-colors flex items-center gap-1"
+                    >
                       0223 493-7841
                     </a>
                   </div>

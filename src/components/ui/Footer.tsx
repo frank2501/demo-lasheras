@@ -60,7 +60,14 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3 text-sm text-white/70">
                 <Phone size={16} className="text-dorado shrink-0" />
-                <span>0223 493-7841</span>
+                <a 
+                  href="https://wa.me/5492234937841?text=Hola!%20Me%20gustar%C3%ADa%20hacer%20una%20consulta%20sobre%20disponibilidad/reserva%20en%20Las%20Heras%20Hotel." 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-dorado transition-colors"
+                >
+                  0223 493-7841
+                </a>
               </li>
               <li className="flex items-center gap-3 text-sm text-white/70">
                 <Mail size={16} className="text-dorado shrink-0" />

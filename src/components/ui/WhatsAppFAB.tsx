@@ -1,7 +1,7 @@
 export default function WhatsAppFAB() {
   return (
     <a
-      href="https://wa.me/5402234937841"
+      href="https://wa.me/5492234937841?text=Hola!%20Me%20gustar%C3%ADa%20hacer%20una%20consulta%20sobre%20disponibilidad/reserva%20en%20Las%20Heras%20Hotel."
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"

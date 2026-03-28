@@ -175,10 +175,13 @@ export default function HabitacionesPage() {
 
       {/* ── Room cards ── */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-24 sm:space-y-32">
-        {ROOMS.map((room) => (
+        {ROOMS.map((room) => {
+          const roomId = room.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+          return (
           <article
             key={room.name}
-            className={`relative flex flex-col items-center gap-8 lg:gap-12 ${
+            id={roomId}
+            className={`relative flex flex-col items-center gap-8 lg:gap-12 scroll-mt-32 ${
               room.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'
             }`}
           >
@@ -288,7 +291,8 @@ export default function HabitacionesPage() {
               </div>
             </div>
           </article>
-        ))}
+          );
+        })}
       </main>
 
       {/* ── Bottom CTA ── */}

@@ -191,7 +191,27 @@ function RoomResultCard({
 
         {/* Price + CTA (right side) */}
         <div className="flex flex-col items-center justify-center pt-4 sm:pt-0 sm:pl-6 min-w-[160px]">
-          <p className="text-3xl font-bold text-azul-marino">
+          {/* Promo badge */}
+          {room.quote?.discount_amount != null && room.quote.discount_amount > 0 && room.quote.original_subtotal != null && (() => {
+            const pct = Math.round((room.quote.discount_amount / room.quote.original_subtotal) * 100);
+            return (
+              <div className="flex flex-col items-center gap-1.5 mb-2">
+                <span className="bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide shadow-sm animate-pulse">
+                  🏷️ {room.quote.promo_description || 'Oferta'}
+                </span>
+                {pct > 0 && (
+                  <span className="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-md">
+                    -{pct}% OFF
+                  </span>
+                )}
+                <p className="text-sm text-foreground/40 flex items-center gap-1">
+                  <span className="text-[10px] uppercase tracking-wide">Antes:</span>
+                  <span className="line-through">{formatARS(room.quote.original_subtotal)}</span>
+                </p>
+              </div>
+            );
+          })()}
+          <p className={`text-3xl font-bold ${room.quote?.discount_amount && room.quote.discount_amount > 0 ? 'text-emerald-600' : 'text-azul-marino'}`}>
             {formatARS(room.quote?.total)}
           </p>
           <p className="text-xs text-foreground/40 mb-3">
