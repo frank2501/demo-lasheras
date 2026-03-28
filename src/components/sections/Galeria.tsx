@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Lightbox from '@/components/ui/Lightbox';
 
 // Real gallery images from /public
@@ -36,10 +37,12 @@ export default function Galeria() {
               onClick={() => setLightboxIndex(i)}
               className="group relative aspect-[4/3] rounded-lg overflow-hidden border border-white/60 shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer bg-crema"
             >
-              <img
+              <Image
                 src={img.src}
                 alt={img.alt}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
 
               {/* Hover overlay */}

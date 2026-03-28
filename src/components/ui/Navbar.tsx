@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Ticket } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const NAV_LINKS = [
@@ -37,7 +38,7 @@ export default function Navbar() {
           className="flex items-center gap-2.5 font-[var(--font-display)] text-xl sm:text-2xl font-bold text-azul-marino tracking-wide"
           style={{ fontFamily: 'var(--font-display)' }}
         >
-          <img src="/logo.png" alt="LH" className="h-10 sm:h-12 w-auto" />
+          <Image src="/logo.png" alt="Las Heras Hotel" width={119} height={70} className="h-10 sm:h-12 w-auto" />
           Las Heras Hotel
         </Link>
         

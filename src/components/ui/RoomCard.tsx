@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { RoomType } from '@/types/artechia';
 import { 
   Users, Check, X, 
@@ -43,10 +44,12 @@ export default function RoomCard({ room, onReserve }: RoomCardProps) {
       {/* Photo */}
       <div className="relative h-52 sm:h-56 bg-crema overflow-hidden">
         {room.photos && room.photos.length > 0 ? (
-          <img
+          <Image
             src={room.photos[0]}
             alt={room.room_type_name}
-            className="w-full h-full object-cover"
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-cover"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-crema">

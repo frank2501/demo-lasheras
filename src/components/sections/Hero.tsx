@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, AlertCircle, CalendarDays } from 'lucide-react';
+import Image from 'next/image';
 import AvailabilityCalendar from '@/components/ui/AvailabilityCalendar';
 
 export default function Hero() {
@@ -102,10 +103,13 @@ export default function Hero() {
     >
       {/* Background image */}
       <div className="absolute inset-0">
-        <img
+        <Image
           src="/hero.jpg"
           alt=""
-          className="w-full h-full object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
         {/* Dark overlay for readability */}
         <div className="absolute inset-0 bg-black/50" />
@@ -171,8 +175,9 @@ export default function Hero() {
 
               {/* Adults */}
               <div className="text-left">
-                <label className="form-label text-azul-marino/70">Adultos</label>
+                <label htmlFor="adults-select" className="form-label text-azul-marino/70">Adultos</label>
                 <select
+                  id="adults-select"
                   className="form-input"
                   value={adults}
                   onChange={(e) => setAdults(Number(e.target.value))}
@@ -185,8 +190,9 @@ export default function Hero() {
 
               {/* Children */}
               <div className="text-left">
-                <label className="form-label text-azul-marino/70">Menores</label>
+                <label htmlFor="children-select" className="form-label text-azul-marino/70">Menores</label>
                 <select
+                  id="children-select"
                   className="form-input"
                   value={children}
                   onChange={(e) => setChildren(Number(e.target.value))}
