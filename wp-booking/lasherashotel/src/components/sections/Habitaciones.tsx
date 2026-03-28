@@ -1,5 +1,6 @@
 import { Users, BedDouble, BedSingle, Wifi, Bath, Tv, Thermometer, ShowerHead, Phone as PhoneIcon, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const AMENITIES = ['Baño privado', 'Wifi gratis', 'TV cable', 'Calefacción', 'Secador de pelo', 'Teléfono'];
 
@@ -55,10 +56,12 @@ export default function Habitaciones() {
               <div key={room.name} className="card flex flex-col overflow-hidden">
                 {/* Photo header */}
                 <div className="h-52 relative overflow-hidden shrink-0 bg-azul-marino/20">
-                  <img
+                  <Image
                     src={room.photo}
                     alt={room.name}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-500 hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-azul-marino/60 via-transparent to-transparent" />
                   <h3

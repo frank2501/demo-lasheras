@@ -81,7 +81,7 @@ export default function Footer() {
               href="https://artechia.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-dorado hover:underline"
+              className="text-white/80 hover:text-white hover:underline transition-colors"
             >
               Artechia
             </a>
